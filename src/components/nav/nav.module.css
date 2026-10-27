@@ -15,12 +15,14 @@
 /* ----- Màu theo trang ----- */
 .home {
   --nav-color: #f7bf18; /* trang Home */
+  --nav-glow: 247, 191, 24; /* màu phát sáng (RGB) khi hover */
   --nav-bg: transparent; /* nằm đè lên ảnh nền */
   --panel-bg: rgba(30, 30, 30, 0.94); /* nền menu toggle trên mobile */
 }
 
 .inner {
   --nav-color: #004b34; /* các trang còn lại */
+  --nav-glow: 0, 140, 96; /* màu phát sáng (RGB) khi hover */
   --nav-bg: #e9e8de; /* #fffef3 ở opacity 0.9 trên #1e1e1e */
   --panel-bg: #e9e8de;
 }
@@ -61,16 +63,27 @@
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity 0.2s ease, color 0.2s ease;
+  transition: text-shadow 0.3s ease, color 0.2s ease;
 }
 
-.link:hover {
-  opacity: 0.7;
-}
-
+/* Hiệu ứng phát sáng: 3 lớp bóng chữ từ gần ra xa */
 .link:focus-visible {
   outline: 2px solid var(--nav-color);
   outline-offset: 4px;
+  text-shadow:
+    0 0 6px rgba(var(--nav-glow), 0.9),
+    0 0 14px rgba(var(--nav-glow), 0.65),
+    0 0 28px rgba(var(--nav-glow), 0.4);
+}
+
+/* chỉ áp dụng hover trên thiết bị có chuột (tránh bị "kẹt" sáng trên điện thoại) */
+@media (hover: hover) {
+  .link:hover {
+    text-shadow:
+      0 0 6px rgba(var(--nav-glow), 0.9),
+      0 0 14px rgba(var(--nav-glow), 0.65),
+      0 0 28px rgba(var(--nav-glow), 0.4);
+  }
 }
 
 /* Trang hiện tại: ở desktop thiết kế không gạch chân */

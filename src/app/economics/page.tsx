@@ -1,15 +1,30 @@
-import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./page.module.css";
 import Toc from "./toc";
+import Gallery from "./gallery";
+import type { GallerySlide } from "./gallery";
 
 const IMG_DIR = "/images/economics";
 
-const PLATETALE_IMAGES = [
-  { src: `${IMG_DIR}/platetale-1.png`, alt: "PlateTale: Finding your best match", w: 351, h: 634, t: 0 },
-  { src: `${IMG_DIR}/platetale-2.png`, alt: "PlateTale: What should we find you?", w: 341, h: 635, t: 0 },
-  { src: `${IMG_DIR}/platetale-3.png`, alt: "PlateTale: Ways PlateTale learns you", w: 340, h: 631, t: 2 },
-  { src: `${IMG_DIR}/platetale-4.png`, alt: "PlateTale: Help PlateTale know you", w: 353, h: 635, t: 0 },
+const PLATETALE_SLIDES: GallerySlide[] = [
+  {
+    gap: 15,
+    images: [
+      { src: `${IMG_DIR}/platetale-1.png`, alt: "PlateTale: Finding your best match", w: 351, h: 634, t: 0 },
+      { src: `${IMG_DIR}/platetale-2.png`, alt: "PlateTale: What should we find you?", w: 341, h: 635, t: 0 },
+      { src: `${IMG_DIR}/platetale-3.png`, alt: "PlateTale: Ways PlateTale learns you", w: 340, h: 631, t: 2 },
+      { src: `${IMG_DIR}/platetale-4.png`, alt: "PlateTale: Help PlateTale know you", w: 353, h: 635, t: 0 },
+    ],
+  },
+  {
+    gap: 10,
+    images: [
+      { src: `${IMG_DIR}/platetale-5.png`, alt: "PlateTale: Taste tab with taste quiz and voice notes", w: 350, h: 634, t: 0 },
+      { src: `${IMG_DIR}/platetale-6.png`, alt: "PlateTale: Ballpark Toffee pick with Pass and Yes buttons", w: 350, h: 634, t: 0 },
+      { src: `${IMG_DIR}/platetale-7.png`, alt: "PlateTale: Delivery tonight preferences", w: 350, h: 634, t: 0 },
+      { src: `${IMG_DIR}/platetale-8.png`, alt: "PlateTale: Budget, delivery time and location settings", w: 350, h: 634, t: 0 },
+    ],
+  },
 ];
 
 type Section = {
@@ -73,76 +88,31 @@ const SECTIONS: Section[] = [
   },
 ];
 
-function ArrowButton() {
-  return (
-    <span className={styles.arrow} aria-hidden="true">
-      <svg viewBox="0 0 48 48" width="100%" height="100%" fill="none">
-        <circle cx="24" cy="24" r="24" fill="#F7BF18" />
-        <path
-          d="M12 24h24M27 15l9 9-9 9"
-          stroke="#fff"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
-
 export default function Economics() {
   return (
     <div className={styles.canvas}>
-    <main className={styles.page}>
-      {/* ===== Cột trái: tiêu đề + mục lục ===== */}
-      <aside className={styles.sidebar}>
-        <h1 className={styles.heading}>Economics</h1>
+      <main className={styles.page}>
+        {/* ===== Cột trái: tiêu đề + mục lục ===== */}
+        <aside className={styles.sidebar}>
+          <h1 className={styles.heading}>Economics</h1>
 
-        <Toc items={SECTIONS.map(({ id, title }) => ({ id, title }))} />
-      </aside>
+          <Toc items={SECTIONS.map(({ id, title }) => ({ id, title }))} />
+        </aside>
 
-      {/* ===== Cột phải: nội dung ===== */}
-      <div className={styles.content}>
-        {SECTIONS.map((s, i) => (
-          <section key={s.id} id={s.id} className={styles.section}>
-            <h2 className={styles.title}>{s.title}</h2>
-            <p className={styles.text}>{s.body}</p>
+        {/* ===== Cột phải: nội dung ===== */}
+        <div className={styles.content}>
+          {SECTIONS.map((s, i) => (
+            <section key={s.id} id={s.id} className={styles.section}>
+              <h2 className={styles.title}>{s.title}</h2>
+              <p className={styles.text}>{s.body}</p>
 
-            {i === 0 && (
-              <div className={styles.galleryWrap}>
-                <ul className={styles.gallery}>
-                  {PLATETALE_IMAGES.map((img) => (
-                    <li
-                      key={img.src}
-                      className={styles.shot}
-                      style={
-                        {
-                          "--w": img.w,
-                          "--h": img.h,
-                          "--t": img.t,
-                        } as CSSProperties
-                      }
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes="(max-width: 1024px) 60vw, 20vw"
-                        quality={100}
-                        className={styles.shotImg}
-                      />
-                    </li>
-                  ))}
-                </ul>
-                <ArrowButton />
-              </div>
-            )}
+              {i === 0 && <Gallery slides={PLATETALE_SLIDES} />}
 
-            {i < SECTIONS.length - 1 && <hr className={styles.divider} />}
-          </section>
-        ))}
-      </div>
-    </main>
+              {i < SECTIONS.length - 1 && <hr className={styles.divider} />}
+            </section>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

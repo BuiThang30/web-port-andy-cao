@@ -1,6 +1,9 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import Toc from "./toc";
+import Fader from "./fader";
+import Carousel from "./carousel";
+import type { CarouselSlide } from "./carousel";
 import styles from "./page.module.css";
 
 /* ===== ẢNH =====
@@ -10,7 +13,14 @@ import styles from "./page.module.css";
    rotate: ảnh trong Figma bị xoay -90° (file gốc dọc, hiển thị ngang). */
 const DIR = "/images/urban-design";
 
-type Shot = { src: string; alt: string; w: number; h: number; rotate?: boolean };
+type Shot = {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+  rotate?: boolean;
+  fade?: { src: string; alt: string }; // ảnh thứ hai: tự chuyển qua lại theo thời gian
+};
 
 const shot = (file: string, alt: string, w: number, h: number, rotate = false): Shot => ({
   src: `${DIR}/${file}`,
@@ -18,6 +28,19 @@ const shot = (file: string, alt: string, w: number, h: number, rotate = false): 
   w,
   h,
   rotate,
+});
+
+// Ảnh tự chuyển qua lại giữa 2 hình (vd: ban ngày <-> buổi tối)
+const fadeShot = (
+  file: string,
+  alt: string,
+  file2: string,
+  alt2: string,
+  w: number,
+  h: number,
+): Shot => ({
+  ...shot(file, alt, w, h),
+  fade: { src: `${DIR}/${file2}`, alt: alt2 },
 });
 
 type Block =
@@ -28,10 +51,15 @@ type Block =
       mt?: number; // khoảng cách phía trên (px Figma)
       ml?: number; // lệch trái (px Figma)
       align?: "start" | "center";
-      arrow?: boolean; // nút mũi tên vàng trang trí
+    }
+  | {
+      type: "carousel"; // gallery trượt ngang, bấm mũi tên vàng để sang nhóm ảnh khác
+      slides: CarouselSlide[];
+      mt?: number;
+      ml?: number;
     }
   | { type: "note"; text: string; mt?: number }
-  | { type: "button"; label: string; mt?: number };
+  | { type: "button"; label: string; href: string; mt?: number }; // Đã thêm href vào type button
 
 type Section = {
   id: string;
@@ -54,7 +82,14 @@ const SECTIONS: Section[] = [
         mt: 39,
         items: [
           shot("urban-1.png", "SketchUp model of the three-story house", 695, 402),
-          shot("urban-2.png", "Street view of the neighborhood in Hanoi", 723, 402),
+          fadeShot(
+            "urban-2.png",
+            "Street view of the house during the day",
+            "urban-35.png",
+            "Street view of the house in the evening",
+            723,
+            402,
+          ),
         ],
       },
       {
@@ -91,16 +126,26 @@ const SECTIONS: Section[] = [
     text: "I joined a 26-member team to explore how a waste system could respond to trash from sorting to collection. Our system identified waste with 94.2% accuracy, reduced odors and airborne bacteria by approximately 85%, and completed a 48-hour stress test, earning a WICO Gold Award.",
     blocks: [
       {
-        type: "row",
-        gap: 14,
+        type: "carousel",
         mt: 39,
         ml: 20,
-        align: "start",
-        arrow: true,
-        items: [
-          shot("urban-5.png", "Smart waste bin prototype", 465, 619),
-          shot("urban-6.png", "Smart waste bin prototype, side view", 463, 620),
-          shot("urban-7.png", "Smart waste bin prototype, detail", 462, 617),
+        slides: [
+          {
+            gap: 14,
+            items: [
+              shot("urban-5.png", "Smart waste bin prototype", 465, 619),
+              shot("urban-6.png", "Smart waste bin prototype, side view", 463, 620),
+              shot("urban-7.png", "Smart waste bin prototype, detail", 462, 617),
+            ],
+          },
+          {
+            gap: 14,
+            items: [
+              shot("urban-36.png", "Smart waste bin with pump and tubing", 465, 619),
+              shot("urban-37.png", "Inside the bin: sorting dividers and servo", 463, 620),
+              shot("urban-38.png", "Inside the bin: lid open above the sorting plate", 462, 617),
+            ],
+          },
         ],
       },
       { type: "note", mt: 26, text: NOTE },
@@ -127,7 +172,8 @@ const SECTIONS: Section[] = [
         mt: 34,
         items: [shot("urban-10.png", "Interactive map of Hanoi heritage sites", 1235, 694)],
       },
-      { type: "button", mt: 23, label: "EXPLORE THE WEBSITE →" },
+      // Đã gắn link web HanoiBeforeAfter.com vào đây
+      { type: "button", mt: 23, label: "EXPLORE THE WEBSITE →", href: "https://HanoiBeforeAfter.com" },
     ],
   },
   {
@@ -251,37 +297,24 @@ const SECTIONS: Section[] = [
   },
 ];
 
-function ArrowButton() {
-  return (
-    <span className={styles.arrow} aria-hidden="true">
-      <svg viewBox="0 0 48 48" width="100%" height="100%" fill="none">
-        <circle cx="24" cy="24" r="24" fill="#F7BF18" />
-        <path
-          d="M12 24h24M27 15l9 9-9 9"
-          stroke="#fff"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
-
 function Media({ item }: { item: Shot }) {
   const style = { "--w": item.w, "--h": item.h } as CSSProperties;
   return (
     <li className={styles.shot} style={style}>
-      <div className={item.rotate ? styles.rotated : styles.fill}>
-        <Image
-          src={item.src}
-          alt={item.alt}
-          fill
-          sizes="(max-width: 1024px) 90vw, 40vw"
-          quality={100}
-          className={styles.shotImg}
-        />
-      </div>
+      {item.fade ? (
+        <Fader pics={[{ src: item.src, alt: item.alt }, item.fade]} />
+      ) : (
+        <div className={item.rotate ? styles.rotated : styles.fill}>
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes="(max-width: 1024px) 90vw, 40vw"
+            quality={100}
+            className={styles.shotImg}
+          />
+        </div>
+      )}
     </li>
   );
 }
@@ -298,12 +331,23 @@ function BlockView({ block }: { block: Block }) {
     );
   }
 
+  if (block.type === "carousel") {
+    return <Carousel slides={block.slides} mt={block.mt ?? 24} ml={block.ml ?? 0} />;
+  }
+
   if (block.type === "button") {
     return (
       <div className={styles.buttonWrap} style={{ "--mt": block.mt ?? 24 } as CSSProperties}>
-        <button type="button" className={styles.button}>
+        {/* Đã sửa thẻ button thành thẻ a để nhận link chuyển hướng */}
+        <a 
+          href={block.href} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className={styles.button}
+          style={{ textDecoration: "none" }}
+        >
           {block.label}
-        </button>
+        </a>
       </div>
     );
   }
@@ -325,7 +369,6 @@ function BlockView({ block }: { block: Block }) {
           <Media key={item.src} item={item} />
         ))}
       </ul>
-      {block.arrow && <ArrowButton />}
     </div>
   );
 }
