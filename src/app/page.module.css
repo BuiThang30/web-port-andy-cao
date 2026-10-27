@@ -17,8 +17,6 @@
   background: #1e1e1e;
 }
 
-/* Figma có opacity 0.9, nhưng trên nền trắng của web nó làm ảnh bị "ám trắng" (mờ).
-   Để 1 cho ảnh rõ nét; muốn nhẹ hơn thì thử 0.95 và đổi nền .hero sang tối. */
 .bg {
   z-index: -2;
   object-fit: cover;

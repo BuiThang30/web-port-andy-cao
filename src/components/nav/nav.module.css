@@ -86,10 +86,6 @@
   }
 }
 
-/* Trang hiện tại: ở desktop thiết kế không gạch chân */
-.active {
-}
-
 /* ===== TABLET + MOBILE (<= 1024px): menu toggle ===== */
 @media (max-width: 1024px) {
   .nav {
