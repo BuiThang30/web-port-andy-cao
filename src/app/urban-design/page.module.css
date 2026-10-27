@@ -1,0 +1,347 @@
+/* ===== DESKTOP: bám sát Figma 1920 x 11303 =====
+   Mọi số đo = (px trong Figma) * var(--px) */
+
+/* Figma: frame có opacity 0.9 đặt trên nền tối => màu hơi xám/trầm như thiết kế.
+   Muốn màu sáng nguyên bản #fffff3 thì đổi opacity của .page thành 1. */
+.canvas {
+  background: #1e1e1e;
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  background: #fffff3;
+  opacity: 0.9;
+  display: grid;
+  grid-template-columns: calc(257 * var(--px)) calc(1430 * var(--px));
+  column-gap: calc(33 * var(--px));
+  align-items: start;
+  padding: calc(100 * var(--px)) 0 calc(100 * var(--px)) calc(100 * var(--px));
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: sticky;
+  top: calc(100 * var(--px));
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--px));
+  min-width: 0;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: calc(70 * var(--px));
+  font-weight: 500;
+  line-height: calc(70 * var(--px));
+  color: #f7bf18;
+  white-space: nowrap;
+}
+
+/* ===== Mục lục ===== */
+.toc {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(15 * var(--px));
+  width: calc(257 * var(--px));
+}
+
+.tocItem {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(5 * var(--px));
+  font-family: var(--font-body);
+  font-size: calc(18 * var(--px));
+  font-weight: 500;
+  line-height: calc(24 * var(--px));
+  color: #979797;
+  transition: color 0.2s ease;
+}
+
+.tocItem:hover {
+  color: #585858;
+}
+
+.tocActive {
+  gap: calc(10 * var(--px));
+  font-weight: 700;
+  color: #585858;
+}
+
+.tocNum {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ===== Nội dung ===== */
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.section {
+  scroll-margin-top: calc(100 * var(--px));
+}
+
+.title {
+  font-family: var(--font-body);
+  font-size: calc(26 * var(--px));
+  font-weight: 700;
+  line-height: calc(31 * var(--px));
+  letter-spacing: calc(-1 * var(--px));
+  color: #e64236;
+  margin-bottom: calc(27 * var(--px));
+}
+
+.text {
+  width: calc(1140 * var(--px));
+  max-width: 100%;
+  font-family: var(--font-body);
+  font-size: calc(18 * var(--px));
+  font-weight: 500;
+  line-height: calc(20 * var(--px));
+  letter-spacing: 0;
+  color: #424242;
+}
+
+/* ===== Hàng ảnh ===== */
+.rowWrap {
+  position: relative;
+  margin-top: calc(var(--mt) * var(--px));
+  padding-left: calc(var(--ml) * var(--px));
+}
+
+.row {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--gap) * var(--px));
+}
+
+.rowCenter {
+  justify-content: center;
+}
+
+.rowStart {
+  justify-content: flex-start;
+}
+
+.shot {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--w) * var(--px));
+  height: calc(var(--h) * var(--px));
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+}
+
+/* Ảnh bị xoay -90° trong Figma: khung gốc dọc, xoay quanh góc trên-trái */
+.rotated {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: calc(var(--h) / var(--w) * 100%);
+  height: calc(var(--w) / var(--h) * 100%);
+  transform-origin: 0 0;
+  transform: rotate(-90deg);
+}
+
+.shotImg {
+  object-fit: cover;
+}
+
+/* nút mũi tên vàng (trang trí): left 1348, top 295 trong gallery WICO */
+.arrow {
+  position: absolute;
+  left: calc((var(--ml) + 1348) * var(--px));
+  top: calc(295 * var(--px));
+  width: calc(48 * var(--px));
+  height: calc(48 * var(--px));
+  pointer-events: none;
+}
+
+/* ===== Chú thích ảnh ===== */
+.note {
+  width: calc(800 * var(--px));
+  max-width: 100%;
+  margin: calc(var(--mt) * var(--px)) auto 0;
+  font-family: var(--font-body);
+  font-size: calc(16 * var(--px));
+  font-weight: 500;
+  line-height: calc(19 * var(--px));
+  letter-spacing: 0;
+  color: #787878;
+  text-align: center;
+}
+
+/* ===== Nút EXPLORE THE WEBSITE ===== */
+.buttonWrap {
+  margin-top: calc(var(--mt) * var(--px));
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(10 * var(--px));
+  width: calc(252 * var(--px));
+  height: calc(47 * var(--px));
+  padding: calc(5 * var(--px)) calc(15 * var(--px));
+  border: calc(3 * var(--px)) solid #424242;
+  font-family: var(--font-display);
+  font-size: calc(25 * var(--px));
+  font-weight: 500;
+  color: #424242;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.button:hover {
+  background: #424242;
+  color: #fffff3;
+}
+
+.button:focus-visible {
+  outline: 2px solid #e64236;
+  outline-offset: 4px;
+}
+
+/* ===== Đường kẻ ===== */
+.divider {
+  width: calc(1426 * var(--px));
+  height: calc(2 * var(--px));
+  border: 0;
+  background: rgba(175, 175, 175, 0.6);
+  margin: calc(65 * var(--px)) 0 calc(55 * var(--px));
+}
+
+/* ===== TABLET (<= 1024px) ===== */
+@media (max-width: 1024px) {
+  .page {
+    display: block;
+    padding: 96px 24px 64px;
+  }
+
+  .sidebar {
+    position: static;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .heading {
+    font-size: clamp(48px, 9vw, 70px);
+    line-height: 1;
+  }
+
+  .toc {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .tocItem {
+    font-size: 16px;
+    line-height: 22px;
+    gap: 6px;
+  }
+
+  .tocActive {
+    gap: 8px;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .section {
+    scroll-margin-top: 72px;
+  }
+
+  .title {
+    font-size: clamp(22px, 3.6vw, 28px);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* ảnh co theo bề ngang, giữ đúng tỉ lệ của từng ảnh */
+  .rowWrap {
+    margin-top: 16px;
+    padding-left: 0;
+  }
+
+  .row {
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .shot {
+    flex: var(--w) 1 0;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    max-width: calc(var(--w) * 1px);
+    aspect-ratio: var(--w) / var(--h);
+  }
+
+  .rowCenter {
+    justify-content: center;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .note {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .buttonWrap {
+    margin-top: 20px;
+  }
+
+  .button {
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    border-width: 2px;
+    font-size: 18px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 2px;
+    margin: 40px 0 36px;
+  }
+}
+
+/* ===== MOBILE (<= 640px) ===== */
+@media (max-width: 640px) {
+  .page {
+    padding: 84px 20px 48px;
+  }
+
+  .row {
+    gap: 4px;
+  }
+
+  .text {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,178 @@
+/* ===== DESKTOP (> 1024px): theo Figma (cao 70, gap 50, mỗi mục padding 0 20) ===== */
+.nav {
+  position: fixed; /* cố định ở đầu trang khi cuộn */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(70 * var(--px));
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--nav-bg, transparent);
+}
+
+/* ----- Màu theo trang ----- */
+.home {
+  --nav-color: #f7bf18; /* trang Home */
+  --nav-bg: transparent; /* nằm đè lên ảnh nền */
+  --panel-bg: rgba(30, 30, 30, 0.94); /* nền menu toggle trên mobile */
+}
+
+.inner {
+  --nav-color: #004b34; /* các trang còn lại */
+  --nav-bg: #e9e8de; /* #fffef3 ở opacity 0.9 trên #1e1e1e */
+  --panel-bg: #e9e8de;
+}
+
+/* Trang Culture & Community: nền #fffdea ở opacity 0.9 trên #1e1e1e */
+.culture {
+  --nav-bg: #e8e7d6;
+  --panel-bg: #e8e7d6;
+}
+
+/* Nút toggle: ẩn ở desktop */
+.toggle {
+  display: none;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0 calc(100 * var(--px));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(50 * var(--px));
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 calc(20 * var(--px));
+  font-family: var(--font-display, "MobleySerif Condensed", "Times New Roman", serif);
+  font-size: calc(20 * var(--px));
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: calc(-0.4 * var(--px));
+  color: var(--nav-color);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--nav-color);
+  outline-offset: 4px;
+}
+
+/* Trang hiện tại: ở desktop thiết kế không gạch chân */
+.active {
+}
+
+/* ===== TABLET + MOBILE (<= 1024px): menu toggle ===== */
+@media (max-width: 1024px) {
+  .nav {
+    height: 64px;
+    justify-content: flex-end;
+    padding: 0 12px;
+  }
+
+  .toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--nav-color);
+    cursor: pointer;
+  }
+
+  .toggle:focus-visible {
+    outline: 2px solid var(--nav-color);
+    outline-offset: 2px;
+  }
+
+  .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  /* 3 gạch -> dấu X khi mở */
+  .open .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .open .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* danh sách link trở thành bảng thả xuống dưới thanh nav */
+  .list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 8px 0 16px;
+    background: var(--panel-bg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  }
+
+  .open .list {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .link {
+    justify-content: flex-start;
+    padding: 14px 24px;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .active {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* ===== MOBILE (<= 640px) ===== */
+@media (max-width: 640px) {
+  .nav {
+    height: 56px;
+    padding: 0 8px;
+  }
+
+  .link {
+    padding: 14px 20px;
+    font-size: 22px;
+  }
+}

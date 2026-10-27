@@ -1,150 +1,165 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+/* ===== DESKTOP: bám sát thiết kế Figma 1920 x 1244 =====
+   Mọi số đo = (số px trong Figma) * var(--px), nên co giãn đúng tỉ lệ. */
+.hero {
+  --name-size: calc(160 * var(--px));
+  --name-lh: calc(140 * var(--px));
+  --name-ls: calc(-3.2 * var(--px));
+  --quote-size: calc(40 * var(--px));
+  --quote-lh: calc(45 * var(--px));
+  --body-size: calc(20 * var(--px));
+  --body-lh: calc(25 * var(--px));
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
-}
-
-.main {
-  display: flex;
-  flex: 1;
+  position: relative;
   width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  aspect-ratio: 1920 / 1244;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1e1e1e;
 }
 
+/* Figma có opacity 0.9, nhưng trên nền trắng của web nó làm ảnh bị "ám trắng" (mờ).
+   Để 1 cho ảnh rõ nét; muốn nhẹ hơn thì thử 0.95 và đổi nền .hero sang tối. */
+.bg {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+}
+
+/* Figma: gradient tối ở phía trên */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    0deg,
+    rgba(30, 30, 30, 0) 69.88%,
+    rgba(30, 30, 30, 0.7) 100%
+  );
+  pointer-events: none;
+}
+
+/* ===== NAME (cột trái: x=170, y=130) ===== */
+.name {
+  position: absolute;
+  top: calc(130 * var(--px));
+  left: calc(170 * var(--px));
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: var(--name-size);
+  font-weight: 500;
+  font-style: normal;
+  line-height: var(--name-lh);
+  letter-spacing: var(--name-ls);
+  color: #fff;
+}
+
+/* ===== INTRO (cột phải: x=970, rộng 780) ===== */
 .intro {
+  position: absolute;
+  top: calc(130 * var(--px));
+  left: calc(970 * var(--px));
+  width: calc(780 * var(--px));
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+  gap: calc(25 * var(--px));
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
+.quote {
+  font-family: var(--font-body);
+  font-size: var(--quote-size);
   font-weight: 500;
-  color: var(--text-primary);
+  font-style: normal;
+  line-height: var(--quote-lh);
+  color: #fff;
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
+.text {
+  font-family: var(--font-body);
+  font-size: var(--body-size);
   font-weight: 500;
+  font-style: normal;
+  line-height: var(--body-lh);
+  color: #fff;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
-}
+/* ===== TABLET (<= 1024px): xếp dọc ===== */
+@media (max-width: 1024px) {
+  .hero {
+    --name-size: clamp(72px, 15vw, 140px);
+    --name-lh: 0.9;
+    --name-ls: -0.02em;
+    --quote-size: clamp(26px, 4vw, 36px);
+    --quote-lh: 1.15;
+    --body-size: clamp(16px, 2.2vw, 19px);
+    --body-lh: 1.4;
 
-a.secondary {
-  border-color: var(--button-secondary-border);
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+    aspect-ratio: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
   }
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+  .hero::after {
+    background: linear-gradient(
+      180deg,
+      rgba(30, 30, 30, 0.7) 0%,
+      rgba(30, 30, 30, 0) 30%,
+      rgba(30, 30, 30, 0) 55%,
+      rgba(30, 30, 30, 0.6) 100%
+    );
   }
-}
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
+  .bg {
+    object-position: 72% center;
+  }
+
+  .name {
+    position: static;
+    padding: clamp(88px, 12vw, 120px) clamp(24px, 6vw, 56px) 0;
   }
 
   .intro {
+    position: static;
+    width: 100%;
+    max-width: 640px;
+    margin-top: auto;
+    padding: 32px clamp(24px, 6vw, 56px) clamp(32px, 6vw, 56px);
     gap: 16px;
   }
+}
 
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
+/* ===== MOBILE (<= 640px) ===== */
+@media (max-width: 640px) {
+  .hero {
+    --name-size: clamp(60px, 22vw, 110px);
+    --quote-size: 24px;
+    --quote-lh: 1.15;
+    --body-size: 15px;
+    --body-lh: 1.4;
+  }
+
+  .name {
+    padding: 84px 20px 0;
+  }
+
+  .bg {
+    object-position: 78% center;
+  }
+
+  .intro {
+    padding: 24px 20px 32px;
+    gap: 12px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (max-width: 380px) {
+  .hero {
+    --quote-size: 21px;
+    --body-size: 14px;
   }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
-}
-
-.code {
-  font-family: var(--font-geist-mono);
-  font-size: 0.9em;
-  background: color-mix(in srgb, currentColor 8%, transparent);
-  padding: 0.1em 0.4em;
-  border-radius: 6px;
 }

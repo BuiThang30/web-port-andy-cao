@@ -1,0 +1,272 @@
+/* ===== DESKTOP: bám sát Figma 1920 x 1764 =====
+   Mọi số đo = (px trong Figma) * var(--px) */
+/* Figma: frame có opacity 0.9 đặt trên nền tối => màu hơi xám/trầm như thiết kế.
+   Muốn màu sáng nguyên bản #fffef3 thì đổi opacity bên dưới thành 1. */
+.canvas {
+  background: #1e1e1e;
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  min-height: calc(1764 * var(--px));
+  background: #fffef3;
+  opacity: 0.9;
+  display: grid;
+  grid-template-columns: calc(257 * var(--px)) calc(1430 * var(--px));
+  column-gap: calc(33 * var(--px));
+  align-items: start;
+  padding: calc(100 * var(--px)) 0 calc(216 * var(--px)) calc(100 * var(--px));
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  /* đứng yên khi cuộn trang để luôn thấy mục lục */
+  position: sticky;
+  top: calc(100 * var(--px));
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--px));
+  /* chữ "Economics" rộng hơn cột 257px một chút trong thiết kế */
+  min-width: 0;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: calc(70 * var(--px));
+  font-weight: 500;
+  line-height: calc(70 * var(--px));
+  color: #f7bf18;
+  white-space: nowrap;
+}
+
+.toc {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(15 * var(--px));
+  width: calc(257 * var(--px));
+}
+
+.tocItem {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(5 * var(--px));
+  font-family: var(--font-body);
+  font-size: calc(18 * var(--px));
+  font-weight: 500;
+  line-height: calc(24 * var(--px));
+  color: #979797;
+  transition: color 0.2s ease;
+}
+
+.tocItem:hover {
+  color: #585858;
+}
+
+.tocActive {
+  gap: calc(10 * var(--px));
+  font-weight: 700;
+  color: #585858;
+}
+
+.tocNum {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ===== Nội dung ===== */
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.section {
+  /* tiêu đề dừng cách mép trên 100px (đúng vị trí thiết kế) khi cuộn tới */
+  scroll-margin-top: calc(100 * var(--px));
+}
+
+.title {
+  font-family: var(--font-body);
+  font-size: calc(36 * var(--px));
+  font-weight: 700;
+  line-height: calc(43 * var(--px));
+  letter-spacing: calc(-1 * var(--px));
+  color: #e64236;
+  margin-bottom: calc(23 * var(--px));
+}
+
+.text {
+  width: calc(1140 * var(--px));
+  max-width: 100%;
+  font-family: var(--font-body);
+  font-size: calc(18 * var(--px));
+  font-weight: 500;
+  line-height: calc(20 * var(--px));
+  letter-spacing: 0;
+  color: #424242;
+}
+
+.text strong {
+  font-weight: 700;
+}
+
+/* ===== Gallery PlateTale ===== */
+.galleryWrap {
+  position: relative;
+  width: calc(1430 * var(--px));
+  margin-top: calc(33 * var(--px));
+  margin-bottom: calc(54 * var(--px));
+}
+
+.gallery {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: calc(15 * var(--px));
+}
+
+.shot {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--w) * var(--px));
+  height: calc(var(--h) * var(--px));
+  margin-top: calc(var(--t) * var(--px));
+  overflow: hidden;
+}
+
+.shotImg {
+  object-fit: cover;
+}
+
+/* nút mũi tên vàng: left 1362, top 295, 48x48 */
+.arrow {
+  position: absolute;
+  left: calc(1362 * var(--px));
+  top: calc(295 * var(--px));
+  width: calc(48 * var(--px));
+  height: calc(48 * var(--px));
+  pointer-events: none;
+}
+
+/* ===== Đường kẻ: rộng 1426, cao 2, dãn 40 ở dưới ===== */
+.divider {
+  width: calc(1426 * var(--px));
+  height: calc(2 * var(--px));
+  border: 0;
+  background: rgba(175, 175, 175, 0.6);
+  margin: calc(44 * var(--px)) 0 calc(44 * var(--px));
+}
+
+/* Section đầu: gallery đã có margin-bottom 54, đường kẻ cách tiêu đề sau 40 */
+.section:first-child .divider {
+  margin-top: 0;
+  margin-bottom: calc(40 * var(--px));
+}
+
+/* ===== TABLET (<= 1024px) ===== */
+@media (max-width: 1024px) {
+  .page {
+    display: block;
+    min-height: 0;
+    padding: 96px 24px 64px;
+  }
+
+  .sidebar {
+    position: static;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .heading {
+    font-size: clamp(48px, 9vw, 70px);
+    line-height: 1;
+  }
+
+  .toc {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .tocItem {
+    font-size: 16px;
+    line-height: 22px;
+    gap: 6px;
+  }
+
+  .tocActive {
+    gap: 8px;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .section {
+    scroll-margin-top: 72px;
+  }
+
+  .title {
+    font-size: clamp(26px, 4.2vw, 36px);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* gallery cuộn ngang */
+  .galleryWrap {
+    width: 100%;
+    margin: 24px 0 36px;
+  }
+
+  .gallery {
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .shot {
+    width: clamp(200px, 38vw, 300px);
+    height: auto;
+    aspect-ratio: var(--w) / var(--h);
+    margin-top: 0;
+    scroll-snap-align: start;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .divider {
+    width: 100%;
+    height: 2px;
+    margin: 32px 0;
+  }
+
+  .section:first-child .divider {
+    margin: 0 0 32px;
+  }
+}
+
+/* ===== MOBILE (<= 640px) ===== */
+@media (max-width: 640px) {
+  .page {
+    padding: 84px 20px 48px;
+  }
+
+  .shot {
+    width: 62vw;
+  }
+
+  .text {
+    font-size: 15px;
+  }
+}
