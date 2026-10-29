@@ -59,7 +59,8 @@ type Block =
       ml?: number;
     }
   | { type: "note"; text: string; mt?: number }
-  | { type: "button"; label: string; href: string; mt?: number }; // Đã thêm href vào type button
+  | { type: "button"; label: string; href: string; mt?: number }
+  | { type: "pdf"; url: string; mt?: number; h?: number }; // Block type mới cho PDF
 
 type Section = {
   id: string;
@@ -67,8 +68,6 @@ type Section = {
   text: string;
   blocks: Block[];
 };
-
-const NOTE = "Note";
 
 const SECTIONS: Section[] = [
   {
@@ -111,12 +110,10 @@ const SECTIONS: Section[] = [
     text: "In Little Saigon, I asked how redevelopment could help a neighborhood grow without pushing out the businesses that give it its identity. I studied 100+ pages of city plans, 20+ academic papers, and census data across 4 cultural districts, developing recommendations for affordable commercial space and public programming that brings young people back.",
     blocks: [
       {
-        type: "row",
-        gap: 0,
+        type: "pdf",
+        url: "https://drive.google.com/file/d/1pB9rXmKUF7s5r6Eh2_s5gUzF5Uyj5XKf/preview",
         mt: 52,
-        items: [
-          shot("urban-4.png", "Research paper on cultural authenticity in Little Saigon", 652, 844),
-        ],
+        h: 844,
       },
     ],
   },
@@ -148,7 +145,11 @@ const SECTIONS: Section[] = [
           },
         ],
       },
-      { type: "note", mt: 26, text: NOTE },
+      { 
+        type: "note", 
+        mt: 26, 
+        text: "Front, rear, and side views of our smart trash-bin prototype, showing the mounted control panel, external wiring, and attached liquid reservoir." 
+      },
       {
         type: "row",
         gap: 30,
@@ -158,7 +159,11 @@ const SECTIONS: Section[] = [
           shot("urban-9.png", "Team presenting at the WICO poster booth", 502, 673),
         ],
       },
-      { type: "note", mt: 26, text: NOTE },
+      { 
+        type: "note", 
+        mt: 26, 
+        text: "Our team holding certificates and the Vietnamese flag at WICO 2026, alongside a photo of me at our exhibition booth with the project’s research poster." 
+      },
     ],
   },
   {
@@ -172,7 +177,6 @@ const SECTIONS: Section[] = [
         mt: 34,
         items: [shot("urban-10.png", "Interactive map of Hanoi heritage sites", 1235, 694)],
       },
-      // Đã gắn link web HanoiBeforeAfter.com vào đây
       { type: "button", mt: 23, label: "EXPLORE THE WEBSITE →", href: "https://HanoiBeforeAfter.com" },
     ],
   },
@@ -199,7 +203,6 @@ const SECTIONS: Section[] = [
           shot("urban-14.png", "Student model with sketches", 613, 398),
         ],
       },
-      { type: "note", mt: 22, text: NOTE },
       {
         type: "row",
         gap: 14,
@@ -218,7 +221,11 @@ const SECTIONS: Section[] = [
           shot("urban-18.png", "Paper shelter model on the grass", 606, 388),
         ],
       },
-      { type: "note", mt: 23, text: NOTE },
+      { 
+        type: "note", 
+        mt: 23, 
+        text: "Students folding and assembling paper into small architectural models, exploring curved roofs, angular walls, and openings." 
+      },
       {
         type: "row",
         gap: 10,
@@ -229,7 +236,6 @@ const SECTIONS: Section[] = [
           shot("urban-21.png", "Finished white architectural models", 596, 430),
         ],
       },
-      { type: "note", mt: 23, text: NOTE },
       {
         type: "row",
         gap: 8,
@@ -240,7 +246,11 @@ const SECTIONS: Section[] = [
           shot("urban-24.png", "Club members building", 397, 299),
         ],
       },
-      { type: "note", mt: 23, text: NOTE },
+      { 
+        type: "note", 
+        mt: 23, 
+        text: "Club members connecting strands of pasta into freestanding towers, holding pieces in place as they build taller frames around triangular supports." 
+      },
     ],
   },
   {
@@ -258,7 +268,11 @@ const SECTIONS: Section[] = [
           shot("urban-27.png", "Filter installation with a family", 402, 535),
         ],
       },
-      { type: "note", mt: 24, text: NOTE },
+      { 
+        type: "note", 
+        mt: 24, 
+        text: "Working beside a household’s outdoor water supply, standing with residents beside a filtration container, and gathering around a table to discuss the setup." 
+      },
       {
         type: "row",
         gap: 10,
@@ -269,12 +283,16 @@ const SECTIONS: Section[] = [
           shot("urban-30.png", "Installing a filter in a household", 401, 535),
         ],
       },
-      { type: "note", mt: 25, text: NOTE },
+      { 
+        type: "note", 
+        mt: 25, 
+        text: "Different stages of hands-on work, from assembling a tall frame outside to measuring and marking materials indoors and fitting wooden pieces together on the floor." 
+      },
     ],
   },
   {
-    id: "sustainable-architecture-summer-program",
-    title: "Sustainable Architecture Summer Program",
+    id: "design-for-tomorrow",
+    title: "Design for Tomorrow",
     text: "Back in Hanoi, I spent 3 days helping 15 students turn recycled materials into their own visions of houses and community spaces. As they built 30+ models, I guided them through testing weak foundations and rebuilding structures that collapsed.",
     blocks: [
       {
@@ -283,15 +301,25 @@ const SECTIONS: Section[] = [
         mt: 38,
         items: [shot("urban-31.png", "Model house built from recycled materials", 1428, 800)],
       },
+      { 
+        type: "note", 
+        mt: 20, 
+        text: "Small cardboard room models displayed alongside floor plans and interior sketches, showing how students translated their drawings into spaces with walls, furniture, and decorative details." 
+      },
       {
         type: "row",
         gap: 7,
-        mt: 8,
+        mt: 20,
         items: [
           shot("urban-32.png", "Students in the summer program classroom", 472, 327),
           shot("urban-33.png", "Students building models", 472, 327),
           shot("urban-34.png", "Students testing their structures", 472, 327),
         ],
+      },
+      { 
+        type: "note", 
+        mt: 20, 
+        text: "An outdoor building session at a picnic table, followed by close-up views of the finished cardboard houses, from a tall blue tower to a broad triangular roof." 
       },
     ],
   },
@@ -338,7 +366,6 @@ function BlockView({ block }: { block: Block }) {
   if (block.type === "button") {
     return (
       <div className={styles.buttonWrap} style={{ "--mt": block.mt ?? 24 } as CSSProperties}>
-        {/* Đã sửa thẻ button thành thẻ a để nhận link chuyển hướng */}
         <a 
           href={block.href} 
           target="_blank" 
@@ -348,6 +375,28 @@ function BlockView({ block }: { block: Block }) {
         >
           {block.label}
         </a>
+      </div>
+    );
+  }
+
+  if (block.type === "pdf") {
+    return (
+      <div 
+        style={{ 
+          marginTop: block.mt ?? 24, 
+          width: "100%", 
+          height: block.h ?? 600, 
+          borderRadius: "8px", 
+          overflow: "hidden" 
+        }}
+      >
+        <iframe
+          src={block.url}
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+          allow="autoplay"
+        ></iframe>
       </div>
     );
   }

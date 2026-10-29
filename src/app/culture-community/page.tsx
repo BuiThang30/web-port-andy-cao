@@ -49,7 +49,11 @@ const SECTIONS: Section[] = [
           shot("culture-1.png", "Online English class on formal greetings with students on video", 1133, 665),
         ],
       },
-      { type: "note", mt: 31, text: "Note" },
+      { 
+        type: "note", 
+        mt: 31, 
+        text: "An online English lesson on formal greetings, with students joining by video as I share examples of how to introduce themselves and begin a conversation." 
+      },
       {
         type: "row",
         gap: 12,
