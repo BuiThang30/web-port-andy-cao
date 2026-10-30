@@ -145,10 +145,10 @@ const SECTIONS: Section[] = [
           },
         ],
       },
-      { 
-        type: "note", 
-        mt: 26, 
-        text: "Front, rear, and side views of our smart trash-bin prototype, showing the mounted control panel, external wiring, and attached liquid reservoir." 
+      {
+        type: "note",
+        mt: 26,
+        text: "Front, rear, and side views of our smart trash-bin prototype, showing the mounted control panel, external wiring, and attached liquid reservoir.",
       },
       {
         type: "row",
@@ -159,10 +159,10 @@ const SECTIONS: Section[] = [
           shot("urban-9.png", "Team presenting at the WICO poster booth", 502, 673),
         ],
       },
-      { 
-        type: "note", 
-        mt: 26, 
-        text: "Our team holding certificates and the Vietnamese flag at WICO 2026, alongside a photo of me at our exhibition booth with the project’s research poster." 
+      {
+        type: "note",
+        mt: 26,
+        text: "Our team holding certificates and the Vietnamese flag at WICO 2026, alongside a photo of me at our exhibition booth with the project’s research poster.",
       },
     ],
   },
@@ -204,6 +204,11 @@ const SECTIONS: Section[] = [
         ],
       },
       {
+        type: "note",
+        mt: 23,
+        text: "Small cardboard room models displayed alongside floor plans and interior sketches, showing how students translated their drawings into spaces with walls, furniture, and decorative details.",
+      },
+      {
         type: "row",
         gap: 14,
         mt: 25,
@@ -221,10 +226,10 @@ const SECTIONS: Section[] = [
           shot("urban-18.png", "Paper shelter model on the grass", 606, 388),
         ],
       },
-      { 
-        type: "note", 
-        mt: 23, 
-        text: "Students folding and assembling paper into small architectural models, exploring curved roofs, angular walls, and openings." 
+      {
+        type: "note",
+        mt: 23,
+        text: "An outdoor building session at a picnic table, followed by close-up views of the finished cardboard houses, from a tall blue tower to a broad triangular roof.",
       },
       {
         type: "row",
@@ -237,6 +242,11 @@ const SECTIONS: Section[] = [
         ],
       },
       {
+        type: "note",
+        mt: 23,
+        text: "Students folding and assembling paper into small architectural models, exploring curved roofs, angular walls, and openings.",
+      },
+      {
         type: "row",
         gap: 8,
         mt: 30,
@@ -246,10 +256,10 @@ const SECTIONS: Section[] = [
           shot("urban-24.png", "Club members building", 397, 299),
         ],
       },
-      { 
-        type: "note", 
-        mt: 23, 
-        text: "Club members connecting strands of pasta into freestanding towers, holding pieces in place as they build taller frames around triangular supports." 
+      {
+        type: "note",
+        mt: 23,
+        text: "Club members connecting strands of pasta into freestanding towers, holding pieces in place as they build taller frames around triangular supports.",
       },
     ],
   },
@@ -268,25 +278,25 @@ const SECTIONS: Section[] = [
           shot("urban-27.png", "Filter installation with a family", 402, 535),
         ],
       },
-      { 
-        type: "note", 
-        mt: 24, 
-        text: "Working beside a household’s outdoor water supply, standing with residents beside a filtration container, and gathering around a table to discuss the setup." 
+      {
+        type: "note",
+        mt: 24,
+        text: "Working beside a household’s outdoor water supply, standing with residents beside a filtration container, and gathering around a table to discuss the setup.",
       },
       {
         type: "row",
         gap: 10,
         mt: 39,
         items: [
-          shot("urban-28.png", "Building filter components", 401, 534),
-          shot("urban-29.png", "Students revising the filter design", 401, 534),
-          shot("urban-30.png", "Installing a filter in a household", 401, 535),
+          shot("urban-28.png", "A volunteer on a ladder fixing a roofing panel under a thatched roof", 401, 534),
+          shot("urban-29.png", "Students preparing large sheets of fabric indoors", 401, 534),
+          shot("urban-30.png", "A student lifting a screen frame out of a water vat", 401, 535),
         ],
       },
-      { 
-        type: "note", 
-        mt: 25, 
-        text: "Different stages of hands-on work, from assembling a tall frame outside to measuring and marking materials indoors and fitting wooden pieces together on the floor." 
+      {
+        type: "note",
+        mt: 25,
+        text: "Different stages of hands-on work, from assembling a tall frame outside to measuring and marking materials indoors and fitting wooden pieces together on the floor.",
       },
     ],
   },
@@ -299,27 +309,34 @@ const SECTIONS: Section[] = [
         type: "row",
         gap: 0,
         mt: 38,
-        items: [shot("urban-31.png", "Model house built from recycled materials", 1428, 800)],
+        items: [
+          shot(
+            "urban-31.png",
+            "Decorated plant pots made from recycled bottles on a wooden table",
+            1428,
+            800,
+          ),
+        ],
       },
-      { 
-        type: "note", 
-        mt: 20, 
-        text: "Small cardboard room models displayed alongside floor plans and interior sketches, showing how students translated their drawings into spaces with walls, furniture, and decorative details." 
+      {
+        type: "note",
+        mt: 20,
+        text: "",
       },
       {
         type: "row",
         gap: 7,
         mt: 20,
         items: [
-          shot("urban-32.png", "Students in the summer program classroom", 472, 327),
-          shot("urban-33.png", "Students building models", 472, 327),
-          shot("urban-34.png", "Students testing their structures", 472, 327),
+          shot("urban-32.png", "Students holding their bottle planters in front of the project slide", 472, 327),
+          shot("urban-33.png", "Students drawing and cutting paper at a table", 472, 327),
+          shot("urban-34.png", "A student planting a seedling in a cut plastic bottle", 472, 327),
         ],
       },
-      { 
-        type: "note", 
-        mt: 20, 
-        text: "An outdoor building session at a picnic table, followed by close-up views of the finished cardboard houses, from a tall blue tower to a broad triangular roof." 
+      {
+        type: "note",
+        mt: 20,
+        text: "",
       },
     ],
   },
@@ -366,10 +383,10 @@ function BlockView({ block }: { block: Block }) {
   if (block.type === "button") {
     return (
       <div className={styles.buttonWrap} style={{ "--mt": block.mt ?? 24 } as CSSProperties}>
-        <a 
-          href={block.href} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <a
+          href={block.href}
+          target="_blank"
+          rel="noopener noreferrer"
           className={styles.button}
           style={{ textDecoration: "none" }}
         >
@@ -381,13 +398,13 @@ function BlockView({ block }: { block: Block }) {
 
   if (block.type === "pdf") {
     return (
-      <div 
-        style={{ 
-          marginTop: block.mt ?? 24, 
-          width: "100%", 
-          height: block.h ?? 600, 
-          borderRadius: "8px", 
-          overflow: "hidden" 
+      <div
+        style={{
+          marginTop: block.mt ?? 24,
+          width: "100%",
+          height: block.h ?? 600,
+          borderRadius: "8px",
+          overflow: "hidden",
         }}
       >
         <iframe
